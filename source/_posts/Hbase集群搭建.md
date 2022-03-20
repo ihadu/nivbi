@@ -1,9 +1,13 @@
 ---
 title: Hbase集群搭建
 date: 2021-10-25 14:22:07
-tags: hbase
+keywords: 'hbase'
+tags:
+- hbase
+categories:
+- 大数据组件
+- hbase
 ---
-# HBase集群环境配置
 ## 一、集群规划
 
 这里搭建一个 3 节点的 HBase 集群，其中三台主机上均为 `Regin Server`。同时为了保证高可用，除了在 hadoop001 上部署主 `Master` 服务外，还在 hadoop002 上部署备用的 `Master` 服务。Master 服务由 Zookeeper 集群进行协调管理，如果主 `Master` 不可用，则备用 `Master` 会成为新的主 `Master`。

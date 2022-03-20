@@ -1,9 +1,13 @@
 ---
-title: Spring整合Mybatis+Phoenix(附springBoot)
+title: Spring整合Mybatis+Phoenix
 date: 2021-10-25 14:25:30
-tags: hbase
+keywords: 'hbase,springBoot'
+tags:
+- hbase
+categories:
+- 大数据组件
+- hbase
 ---
-# Spring整合Mybatis+Phoenix(附springBoot)
 
 ## 一、前言
 

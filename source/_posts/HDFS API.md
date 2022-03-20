@@ -1,7 +1,12 @@
 ---
 title: HDFS JAVA API
 date: 2021-10-15 15:06:12
-tags: hadoop
+keywords: 'hdfs'
+tags:
+- hadoop
+categories:
+- 大数据组件
+- hadoop
 ---
 ## 一、 简介
 

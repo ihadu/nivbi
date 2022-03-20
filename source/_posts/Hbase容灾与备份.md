@@ -1,9 +1,13 @@
 ---
 title: Hbase容灾与备份
 date: 2021-10-25 14:33:53
-tags: hbase
+keywords: 'hbase'
+tags:
+- hbase
+categories:
+- 大数据组件
+- hbase
 ---
-# Hbase容灾与备份
 
 ## 一、前言
 

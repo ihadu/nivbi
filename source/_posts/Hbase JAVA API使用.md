@@ -1,9 +1,13 @@
 ---
 title: Hbase JAVA API使用
 date: 2021-10-25 14:27:11
-tags: hbase
+keywords: 'hbase'
+tags:
+ - hbase
+categories:
+ - 大数据组件
+ - hbase
 ---
-# HBase Java API 的基本使用
 
 ## 一、简述
 
@@ -684,11 +688,11 @@ as shown in the following example:
 对于高并发多线程访问的应用程序（例如，在单个 JVM 中存在的为多个线程服务的 Web 服务器或应用程序服务器），  
 您只需要预先创建一个 Connection。例子如下：
 
-// Create a connection to the cluster.
+ //Create a connection to the cluster.
 Configuration conf = HBaseConfiguration.create();
 try (Connection connection = ConnectionFactory.createConnection(conf);
      Table table = connection.getTable(TableName.valueOf(tablename))) {
-  // use table as needed, the table returned is lightweight
+   //use table as needed, the table returned is lightweight
 }
 ```
 
@@ -723,16 +727,17 @@ Connection 对象和实际的 Socket 连接之间的对应关系如下图：
 ```java
 @InterfaceAudience.Private
 public class PoolMap<K, V> implements Map<K, V> {
-  private PoolType poolType;
+    private PoolType poolType;
 
-  private int poolMaxSize;
+    private int poolMaxSize;
 
-  private Map<K, Pool<V>> pools = new ConcurrentHashMap<>();
+    private Map<K, Pool<V>> pools = new ConcurrentHashMap<>();
 
-  public PoolMap(PoolType poolType) {
-    this.poolType = poolType;
-  }
-  .....
+    public PoolMap(PoolType poolType) {
+        this.poolType = poolType;
+    }
+    //略
+}
 ```
 
 HBase 中提供了三种资源池的实现，分别是 `Reusable`，`RoundRobin` 和 `ThreadLocal`。具体实现可以通 `hbase.client.ipc.pool.type` 配置项指定，默认为 `Reusable`。连接池的大小也可以通过 `hbase.client.ipc.pool.size` 配置项指定，默认为 1，即每个 Server 1 个连接。也可以通过修改配置实现：

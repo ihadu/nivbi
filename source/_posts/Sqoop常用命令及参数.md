@@ -1,7 +1,12 @@
 ---
 title: Sqoop常用命令及参数
 date: 2021-10-25 13:48:34
-tags: sqoop
+keywords: 'sqoop'
+tags:
+- sqoop
+categories:
+- 大数据组件
+- sqoop
 ---
 ## Sqoop 常用命令及参数
 ### 常用命令列举

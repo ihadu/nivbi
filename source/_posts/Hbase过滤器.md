@@ -1,10 +1,13 @@
 ---
 title: Hbase过滤器
 date: 2021-10-25 14:29:38
-tags: hbase
+keywords: 'hbase'
+tags:
+- hbase
+categories:
+- 大数据组件
+- hbase
 ---
-# Hbase 过滤器详解
-
 ## 一、HBase过滤器简介
 
 Hbase 提供了种类丰富的过滤器（filter）来提高数据处理的效率，用户可以通过内置或自定义的过滤器来对数据进行过滤，所有的过滤器都在服务端生效，即谓词下推（predicate push down）。这样可以保证过滤掉的数据不会被传送到客户端，从而减轻网络传输和客户端处理的压力。

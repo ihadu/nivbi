@@ -1,7 +1,13 @@
 ---
 title: Hive自定义UDF函数
 date: 2021-10-13 16:55:03
-tags: hive
+keywords: 'hive'
+tags:
+- hive
+categories:
+- 大数据组件
+- hive
+description:
 ---
 
 ### 1. Hive自定义函数介绍

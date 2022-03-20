@@ -1,10 +1,13 @@
 ---
 title: Hbase协处理器
 date: 2021-10-25 14:31:06
-tags: hbase
+keywords: 'hbase'
+tags:
+ - hbase
+categories:
+ - 大数据组件
+ - hbase
 ---
-# Hbase 协处理器
-
 
 ## 一、简述
 
@@ -23,7 +26,6 @@ Observer 协处理器类似于关系型数据库中的触发器，当发生某�
 + **完整性约束**： HBase 不支持关系型数据库中的外键功能，可以通过触发器在插入或者删除数据的时候，对关联的数据进行检查；
 + **二级索引**： 可以使用协处理器来维护二级索引。
 
-</br>
 
 #### 2. 类型
 
@@ -38,7 +40,6 @@ Observer 协处理器类似于关系型数据库中的触发器，当发生某�
 + **WalObserver** :
   允许您观察与预写日志（WAL）相关的事件。
 
-</br>
 
 ####  3. 接口
 
@@ -50,7 +51,6 @@ Observer 协处理器类似于关系型数据库中的触发器，当发生某�
 
 <div align="center"> <img  src="https://gitee.com/ihadyou/BigData-Notes/raw/master/pictures/RegionObserver.png"/> </div>
 
-</br>
 
 #### 4. 执行流程
 
@@ -117,7 +117,6 @@ Endpoint 协处理器类似于关系型数据库中的存储过程。客户端�
 
 3. 重启 HBase。
 
-</br>
 
 ### 4.2 静态卸载
 
@@ -181,7 +180,6 @@ hbase > describe 'tableName'
 
 协处理器出现在 `TABLE_ATTRIBUTES` 属性中则代表加载成功。
 
-</br>
 
 ### 5.2 HBase Shell动态卸载
 
@@ -203,7 +201,6 @@ hbase> alter 'tableName', METHOD => 'table_att_unset', NAME => 'coprocessor$1'
 hbase> enable 'tableName'
 ```
 
-</br>
 
 ### 5.3 Java API 动态加载
 

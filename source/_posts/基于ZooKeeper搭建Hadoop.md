@@ -1,7 +1,12 @@
 ---
 title: 基于ZooKeeper搭建Hadoop
 date: 2021-10-15 15:10:00
-tags: hadoop
+keywords: 'hadoop'
+tags:
+- hadoop
+categories:
+- 大数据组件
+- hadoop
 ---
 ## 一、高可用简介
 
@@ -53,8 +58,8 @@ YARN ResourceManager 的高可用与 HDFS NameNode 的高可用类似，但是 R
 
 ## 三、前置条件
 
-- 所有服务器都安装有 JDK，安装步骤可以参见：[Linux 下 JDK 的安装](https://github.com/heibaiying/BigData-Notes/blob/master/notes/installation/Linux下JDK安装.md)；
-- 搭建好 ZooKeeper 集群，搭建步骤可以参见：[Zookeeper 单机环境和集群环境搭建](https://github.com/heibaiying/BigData-Notes/blob/master/notes/installation/Zookeeper单机环境和集群环境搭建.md)
+- 所有服务器都安装有 JDK，安装步骤可以参见：[Linux 下 JDK 的安装](https://github.com/ihadyou/BigData-Notes/blob/master/notes/installation/Linux下JDK安装.md)；
+- 搭建好 ZooKeeper 集群，搭建步骤可以参见：[Zookeeper 单机环境和集群环境搭建](https://github.com/ihadyou/BigData-Notes/blob/master/notes/installation/Zookeeper单机环境和集群环境搭建.md)
 - 所有服务器之间都配置好 SSH 免密登录。
 
 ## 四、集群配置

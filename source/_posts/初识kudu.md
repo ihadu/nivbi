@@ -1,9 +1,13 @@
 ---
 title: 初识kudu
 date: 2021-10-13 16:46:55
-tags: kudu
+keywords: 'kudu'
+tags:
+- kudu
+categories:
+- 大数据组件
+- kudu
 ---
-#  1、 kudu简介
 ##  1.1、kudu是什么
 简单来说:dudu是一个与hbase类似的列式存储分布式数据库。
 官方给kudu的定位是:在更新更及时的基础上实现更快的数据分析

@@ -1,9 +1,13 @@
 ---
 title: Hbase简介
 date: 2021-10-25 14:16:23
-tags: hbase
+keywords: 'hbase'
+tags:
+- hbase
+categories:
+- 大数据组件
+- hbase
 ---
-# HBase简介
 ## 一、Hadoop的局限
 
 HBase 是一个构建在 Hadoop 文件系统之上的面向列的数据库管理系统。
