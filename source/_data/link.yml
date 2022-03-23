@@ -1,10 +1,18 @@
-- class_name: 友情鏈接
-  class_desc: 那些人，那些事
+- class_name: 大草帽海贼团
+  class_desc: 海贼团其他重要成员
   link_list:
-    - name: Hexo
-      link: https://hexo.io/zh-tw/
-      avatar: https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg
+    - name: ihadu博客园
+      link: https://www.cnblogs.com/ihadu/
+      avatar: https://pic.imgdb.cn/item/623a880827f86abb2a29b90c.png
+      descr: 面向开发者的知识分享社区
+    - name: 哇呜导航
+      link: https://oicio.cn
+      avatar: /nav/images/logo-dark.png
       descr: 快速、簡單且強大的網誌框架
+    - name: 聚合导航
+      link: https://ujuji.com/u/ihadu
+      avatar: https://cdn.misiai.com/static/ujuji.com/apple-touch-icon.png
+      descr: 提供最快捷的资源平台
 
 - class_name: 網站
   class_desc: 值得推薦的網站
