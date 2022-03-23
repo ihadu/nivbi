@@ -1,7 +1,13 @@
 ---
 title: Hive条件与日期函数汇总
 date: 2021-10-25 13:55:18
-tags: hive
+keywords: 'hive'
+tags:
+- hive
+categories:
+- 大数据组件
+- hive
+description:
 ---
 ## 条件函数
 ### assert_true(BOOLEAN condition)

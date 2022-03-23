@@ -95,7 +95,7 @@ index_img: https://pic.imgdb.cn/item/6215f8552ab3f51d91921334.png
 #index_img: https://pic.imgdb.cn/item/6215f85b2ab3f51d91921f35.png
 
 # If the banner of page not setting, it will show the top_img / 默認的 top_img，當頁面的 top_img 沒有配置時，會顯示 default_top_img
-default_top_img: https://pic.imgdb.cn/item/6215f85b2ab3f51d91921f35.png
+default_top_img: https://pic.imgdb.cn/item/5fb1e987b18d627113aa8391.gif
 
 # The banner image of archive page /歸檔頁面的 top_img
 archive_img: https://pic.imgdb.cn/item/5fb1e987b18d627113aa8391.gif
@@ -187,7 +187,7 @@ toc:
   style_simple: false # for post
 
 post_copyright:
-  enable: true
+  enable: false
   decode: false
   license: CC BY-NC-SA 4.0
   license_url: https://creativecommons.org/licenses/by-nc-sa/4.0/
@@ -403,7 +403,7 @@ footer:
   owner:
     enable: true
     since: 2022
-  custom_text: 不要停下来
+  custom_text: peace and love
   copyright: true # Copyright of theme and framework
 
 # Analysis
@@ -535,14 +535,14 @@ canvas_nest:
 # Typewriter Effect (打字效果)
 # https://github.com/disjukr/activate-power-mode
 activate_power_mode:
-  enable: false
+  enable: true
   colorful: true # open particle animation (冒光特效)
   shake: true #  open shake (抖動特效)
-  mobile: false
+  mobile: true
 
 # Mouse click effects: fireworks (鼠標點擊效果: 煙火特效)
 fireworks:
-  enable: false
+  enable: true
   zIndex: 9999 # -1 or 9999
   mobile: false
 
@@ -568,7 +568,7 @@ display_mode: light
 
 # Beautify (美化頁面顯示)
 beautify:
-  enable: false
+  enable: true
   field: post # site/post
   title-prefix-icon: # '\f0c1'
   title-prefix-icon-color: # '#F47466'
@@ -595,7 +595,7 @@ hr_icon:
 
 # the subtitle on homepage (主頁subtitle)
 subtitle:
-  enable: false
+  enable: true
   # Typewriter Effect (打字效果)
   effect: true
   # loop (循環打字)
@@ -606,7 +606,7 @@ subtitle:
   # source: 2  調用一句網（簡體） http://yijuzhan.com/
   # source: 3  調用今日詩詞（簡體） https://www.jinrishici.com/
   # subtitle 會先顯示 source , 再顯示 sub 的內容
-  source: false
+  source: https://hitokoto.cn/
   # 如果關閉打字效果，subtitle 只會顯示 sub 的第一行文字
   sub:
 
@@ -632,7 +632,7 @@ aside:
       link: https://github.com/ihadu
   card_announcement:
     enable: true
-    content: This is my Blog
+    content: Have you found your way home yet
   card_recent_post:
     enable: true
     limit: 5 # if set 0 will show all

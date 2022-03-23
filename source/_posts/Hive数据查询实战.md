@@ -1,30 +1,36 @@
 ---
 title: Hive数据查询实战
 date: 2021-10-15 15:39:23
-tags: hive
+keywords: 'hive'
+tags:
+- hive
+categories:
+- 大数据组件
+- hive
+description:
 ---
 ## 一、数据准备
 
 为了演示查询操作，这里需要预先创建三张表，并加载测试数据。
 
-> 数据文件 emp.txt 和 dept.txt 可以从本仓库的[resources](https://github.com/heibaiying/BigData-Notes/tree/master/resources) 目录下载。
+> 数据文件 emp.txt 和 dept.txt 可以从本仓库的[resources](https://gitee.com/oicio/BigData-Notes/tree/master/resources) 目录下载。
 
 ### 1.1 员工表
 
 ```sql
  -- 建表语句
- CREATE TABLE emp(
-     empno INT,     -- 员工表编号
-     ename STRING,  -- 员工姓名
-     job STRING,    -- 职位类型
-     mgr INT,
-     hiredate TIMESTAMP,  --雇佣日期
-     sal DECIMAL(7,2),  --工资
-     comm DECIMAL(7,2),
-     deptno INT)   --部门编号
+CREATE TABLE emp(
+                    empno INT,     -- 员工表编号
+                    ename STRING,  -- 员工姓名
+                    job STRING,    -- 职位类型
+                    mgr INT,
+                    hiredate TIMESTAMP,  --雇佣日期
+                    sal DECIMAL(7,2),  --工资
+                    comm DECIMAL(7,2),
+                    deptno INT)   --部门编号
     ROW FORMAT DELIMITED FIELDS TERMINATED BY "\t";
 
-  --加载数据
+--加载数据
 LOAD DATA LOCAL INPATH "/usr/file/emp.txt" OVERWRITE INTO TABLE emp;
 ```
 
@@ -221,7 +227,7 @@ Hive 支持内连接，外连接，左外连接，右外连接，笛卡尔连接
 
 需要特别强调：JOIN 语句的关联条件必须用 ON 指定，不能用 WHERE 指定，否则就会先做笛卡尔积，再过滤，这会导致你得不到预期的结果 (下面的演示会有说明)。
 
-![](https://pic.downk.cc/item/5ff40fc53ffa7d37b3b21b93.jpg)
+<div align="center"> <img width="600px"  src="https://gitee.com/oicio/BigData-Notes/raw/master/pictures/sql-join.jpg"/> </div>
 
 ### 3.1 INNER JOIN
 
@@ -258,9 +264,8 @@ ON e.deptno = d.deptno;
 
 执行右连接后，由于 40 号部门下没有任何员工，所以此时员工信息为 NULL。这个查询可以很好的复述上面提到的——JOIN 语句的关联条件必须用 ON 指定，不能用 WHERE 指定。你可以把 ON 改成 WHERE，你会发现无论如何都查不出 40 号部门这条数据，因为笛卡尔运算不会有 (NULL, 40) 这种情况。
 
-![](https://pic.downk.cc/item/5ff40fc53ffa7d37b3b21b91.png)
-
-### 3.4 FULL OUTER  JOIN
+<div align="center"> <img width="700px"   src="https://gitee.com/oicio/BigData-Notes/raw/master/pictures/hive-right-join.png"/> </div>
+### 3.4 FULL OUTER  JOIN 
 
 ```sql
 SELECT e.*,d.*
@@ -356,6 +361,10 @@ SET hive.exec.mode.local.auto=true;
 - 所需的 reduce 任务总数为 1 或 0。
 
 因为我们测试的数据集很小，所以你再次去执行上面涉及 MR 操作的查询，你会发现速度会有显著的提升。
+
+
+
+
 
 ## 参考资料
 

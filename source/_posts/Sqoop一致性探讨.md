@@ -1,7 +1,12 @@
 ---
 title: Sqoop一致性探讨
 date: 2021-10-25 13:49:32
-tags: sqoop
+keywords: 'sqoop'
+tags:
+- sqoop
+categories:
+- 大数据组件
+- sqoop
 ---
 ## Sqoop导入导出Null存储一致性问题
 Hive中的Null在底层是以“\N”来存储，而MySQL中的Null在底层就是Null，为了保证数据两端的一致性。在导出数据时采用--input-null-string和--input-null-non-string两个参数。导入数据时采用--null-string和--null-non-string。

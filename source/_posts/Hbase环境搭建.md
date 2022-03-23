@@ -1,9 +1,13 @@
 ---
 title: Hbase环境搭建
 date: 2021-10-25 14:21:57
-tags: hbase
+keywords: 'hbase'
+tags:
+- hbase
+categories:
+- 大数据组件
+- hbase
 ---
-# HBase基本环境搭建
 ## 一、安装前置条件说明
 
 ### 1.1 JDK版本说明

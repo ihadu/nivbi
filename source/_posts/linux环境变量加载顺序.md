@@ -1,7 +1,12 @@
 ---
 title: linux环境变量加载顺序
 date: 2021-10-13 16:49:14
-tags: linux
+keywords: 'linux'
+tags:
+- linux
+categories:
+- 运维
+description:
 ---
 # 01、环境变量文件描述
 

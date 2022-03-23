@@ -1,9 +1,13 @@
 ---
 title: Hbase常用shell命令
 date: 2021-10-25 14:24:47
-tags: hbase
+keywords: 'hbase'
+tags:
+- hbase
+categories:
+- 大数据组件
+- hbase
 ---
-# Hbase 常用 Shell 命令
 ## 一、基本命令
 
 打开 Hbase Shell：

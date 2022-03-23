@@ -1,19 +1,26 @@
 ---
 title: Hadoop集群环境搭建
 date: 2021-10-15 15:01:58
-tags: hadoop
+keywords: 'hadoop'
+tags:
+ - hadoop
+categories:
+ - 大数据组件
+ - hadoop
 ---
 ## 一、集群规划
 
 这里搭建一个 3 节点的 Hadoop 集群，其中三台主机均部署 `DataNode` 和 `NodeManager` 服务，但只有 hadoop001 上部署 `NameNode` 和 `ResourceManager` 服务。
 
-![](https://pic.downk.cc/item/5f7d360d1cd1bbb86b5169a4.png)
+<div align="center"> <img  src="https://gitee.com/oicio/BigData-Notes/raw/master/pictures/hadoop集群规划.png"/> </div>
 
 ## 二、前置条件
 
 Hadoop 的运行依赖 JDK，需要预先安装。其安装步骤单独整理至：
 
-- [Linux 下 JDK 的安装](https://github.com/heibaiying/BigData-Notes/blob/master/notes/installation/Linux下JDK安装.md)
++ [Linux 下 JDK 的安装](https://github.com/oicio/BigData-Notes/blob/master/notes/installation/Linux下JDK安装.md)
+
+
 
 ## 三、配置免密登录
 
@@ -21,7 +28,7 @@ Hadoop 的运行依赖 JDK，需要预先安装。其安装步骤单独整理至
 
 在每台主机上使用 `ssh-keygen` 命令生成公钥私钥对：
 
-```
+```shell
 ssh-keygen
 ```
 
@@ -29,7 +36,7 @@ ssh-keygen
 
 将 `hadoop001` 的公钥写到本机和远程机器的 ` ~/ .ssh/authorized_key` 文件中：
 
-```
+```shell
 ssh-copy-id -i ~/.ssh/id_rsa.pub hadoop001
 ssh-copy-id -i ~/.ssh/id_rsa.pub hadoop002
 ssh-copy-id -i ~/.ssh/id_rsa.pub hadoop003
@@ -37,10 +44,12 @@ ssh-copy-id -i ~/.ssh/id_rsa.pub hadoop003
 
 ### 3.3 验证免密登录
 
-```
+```she
 ssh hadoop002
 ssh hadoop003
 ```
+
+
 
 ## 四、集群搭建
 
@@ -48,7 +57,7 @@ ssh hadoop003
 
 下载 Hadoop。这里我下载的是 CDH 版本 Hadoop，下载地址为：http://archive.cloudera.com/cdh5/cdh/5/
 
-```
+```shell
 # tar -zvxf hadoop-2.6.0-cdh5.15.2.tar.gz 
 ```
 
@@ -56,7 +65,7 @@ ssh hadoop003
 
 编辑 `profile` 文件：
 
-```
+```shell
 # vim /etc/profile
 ```
 
@@ -69,7 +78,7 @@ export  PATH=${HADOOP_HOME}/bin:$PATH
 
 执行 `source` 命令，使得配置立即生效：
 
-```
+```shell
 # source /etc/profile
 ```
 
@@ -79,14 +88,14 @@ export  PATH=${HADOOP_HOME}/bin:$PATH
 
 #### 1. hadoop-env.sh
 
-```
+```shell
 # 指定JDK的安装位置
 export JAVA_HOME=/usr/java/jdk1.8.0_201/
 ```
 
 #### 2.  core-site.xml
 
-```
+```xml
 <configuration>
     <property>
         <!--指定 namenode 的 hdfs 协议文件系统的通信地址-->
@@ -103,7 +112,7 @@ export JAVA_HOME=/usr/java/jdk1.8.0_201/
 
 #### 3. hdfs-site.xml
 
-```
+```xml
 <property>
       <!--namenode 节点数据（即元数据）的存放位置，可以指定多个目录实现容错，多个目录用逗号分隔-->
     <name>dfs.namenode.name.dir</name>
@@ -118,7 +127,7 @@ export JAVA_HOME=/usr/java/jdk1.8.0_201/
 
 #### 4. yarn-site.xml
 
-```
+```xml
 <configuration>
     <property>
         <!--配置 NodeManager 上运行的附属服务。需要配置成 mapreduce_shuffle 后才可以在 Yarn 上运行 MapReduce 程序。-->
@@ -131,11 +140,12 @@ export JAVA_HOME=/usr/java/jdk1.8.0_201/
         <value>hadoop001</value>
     </property>
 </configuration>
+
 ```
 
 #### 5.  mapred-site.xml
 
-```
+```xml
 <configuration>
     <property>
         <!--指定 mapreduce 作业运行在 yarn 上-->
@@ -149,7 +159,7 @@ export JAVA_HOME=/usr/java/jdk1.8.0_201/
 
 配置所有从属节点的主机名或 IP 地址，每行一个。所有从属节点上的 `DataNode` 服务和 `NodeManager` 服务都会被启动。
 
-```
+```properties
 hadoop001
 hadoop002
 hadoop003
@@ -159,7 +169,7 @@ hadoop003
 
 将 Hadoop 安装包分发到其他两台服务器，分发后建议在这两台服务器上也配置一下 Hadoop 的环境变量。
 
-```
+```shell
 # 将安装包分发到hadoop002
 scp -r /usr/app/hadoop-2.6.0-cdh5.15.2/  hadoop002:/usr/app/
 # 将安装包分发到hadoop003
@@ -178,7 +188,7 @@ hdfs namenode -format
 
 进入到 `Hadoop001` 的 `${HADOOP_HOME}/sbin` 目录下，启动 Hadoop。此时 `hadoop002` 和 `hadoop003` 上的相关服务也会被启动：
 
-```
+```shell
 # 启动dfs服务
 start-dfs.sh
 # 启动yarn服务
@@ -189,20 +199,23 @@ start-yarn.sh
 
 在每台服务器上使用 `jps` 命令查看服务进程，或直接进入 Web-UI 界面进行查看，端口为 `50070`。可以看到此时有三个可用的 `Datanode`：
 
-![](https://pic.downk.cc/item/5f7d360d1cd1bbb86b5169b8.png)
+<div align="center"> <img  src="https://gitee.com/oicio/BigData-Notes/raw/master/pictures/hadoop-集群环境搭建.png"/> </div>
+<BR/>
 
 点击 `Live Nodes` 进入，可以看到每个 `DataNode` 的详细情况：
 
-![](https://pic.downk.cc/item/5f7d360d1cd1bbb86b5169a8.png)
+<div align="center"> <img  src="https://gitee.com/oicio/BigData-Notes/raw/master/pictures/hadoop-集群搭建2.png"/> </div>
+<BR/>
 
 接着可以查看 Yarn 的情况，端口号为 `8088` ：
 
-![](https://pic.downk.cc/item/5f7d360d1cd1bbb86b5169af.png)
+<div align="center"> <img  src="https://gitee.com/oicio/BigData-Notes/raw/master/pictures/hadoop-集群搭建3.png"/> </div>
+
 
 ## 五、提交服务到集群
 
 提交作业到集群的方式和单机环境完全一致，这里以提交 Hadoop 内置的计算 Pi 的示例程序为例，在任何一个节点上执行都可以，命令如下：
 
-```
+```shell
 hadoop jar /usr/app/hadoop-2.6.0-cdh5.15.2/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.0-cdh5.15.2.jar  pi  3  3
 ```

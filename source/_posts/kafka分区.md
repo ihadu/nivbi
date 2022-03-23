@@ -1,9 +1,14 @@
 ---
 title: Kafka分区
 date: 2021-10-13 16:50:57
-tags: kafka
+keywords: 'kafka'
+tags:
+- kafka
+categories:
+- 大数据组件
+- kafka
+description:
 ---
-[TOC]
 
 ## 设置topic下的分区数
 

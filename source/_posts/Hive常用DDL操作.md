@@ -1,20 +1,27 @@
 ---
 title: Hive常用DDL操作
 date: 2021-10-15 15:20:08
-tags: hive
+keywords: 'hive'
+tags:
+- hive
+categories:
+- 大数据组件
+- hive
+description:
 ---
 ## 一、Database
 
-
 ### 1.1 查看数据列表
 
-```bash
+```sql
 show databases;
 ```
 
+<div align="center"> <img width='700px' src="https://gitee.com/oicio/BigData-Notes/raw/master/pictures/hive-show-database.png"/> </div>
+
 ### 1.2 使用数据库
 
-```bash
+```sql
 USE database_name;
 ```
 
@@ -22,7 +29,7 @@ USE database_name;
 
 语法：
 
-```bash
+```sql
 CREATE (DATABASE|SCHEMA) [IF NOT EXISTS] database_name   --DATABASE|SCHEMA 是等价的
   [COMMENT database_comment] --数据库注释
   [LOCATION hdfs_path] --存储在 HDFS 上的位置
@@ -31,47 +38,53 @@ CREATE (DATABASE|SCHEMA) [IF NOT EXISTS] database_name   --DATABASE|SCHEMA 是�
 
 示例：
 
-```bash
+```sql
 CREATE DATABASE IF NOT EXISTS hive_test
   COMMENT 'hive database for test'
-  WITH DBPROPERTIES ('create'='heibaiying');
+  WITH DBPROPERTIES ('create'='oicio');
 ```
+
+
 
 ### 1.4 查看数据库信息
 
 语法：
 
-```bash
+```sql
 DESC DATABASE [EXTENDED] db_name; --EXTENDED 表示是否显示额外属性
 ```
 
 示例：
 
-```bash
+```sql
 DESC DATABASE  EXTENDED hive_test;
 ```
+
+
 
 ### 1.5 删除数据库
 
 语法：
 
-```bash
+```sql
 DROP (DATABASE|SCHEMA) [IF EXISTS] database_name [RESTRICT|CASCADE];
 ```
 
-- 默认行为是 RESTRICT，如果数据库中存在表则删除失败。要想删除库及其中的表，可以使用 CASCADE 级联删除。
++ 默认行为是 RESTRICT，如果数据库中存在表则删除失败。要想删除库及其中的表，可以使用 CASCADE 级联删除。
 
 示例：
 
-```bash
+```sql
   DROP DATABASE IF EXISTS hive_test CASCADE;
 ```
+
+
 
 ## 二、创建表
 
 ### 2.1 建表语法
 
-```bash
+```sql
 CREATE [TEMPORARY] [EXTERNAL] TABLE [IF NOT EXISTS] [db_name.]table_name     --表名
   [(col_name data_type [COMMENT col_comment],
     ... [constraint_specification])]  --列名 列数据类型
@@ -96,7 +109,7 @@ CREATE [TEMPORARY] [EXTERNAL] TABLE [IF NOT EXISTS] [db_name.]table_name     --�
 
 ### 2.2 内部表
 
-```bash
+```sql
   CREATE TABLE emp(
     empno INT,
     ename STRING,
@@ -111,7 +124,7 @@ CREATE [TEMPORARY] [EXTERNAL] TABLE [IF NOT EXISTS] [db_name.]table_name     --�
 
 ### 2.3 外部表
 
-```bash
+```sql
   CREATE EXTERNAL TABLE emp_external(
     empno INT,
     ename STRING,
@@ -127,11 +140,11 @@ CREATE [TEMPORARY] [EXTERNAL] TABLE [IF NOT EXISTS] [db_name.]table_name     --�
 
 使用 `desc format  emp_external` 命令可以查看表的详细信息如下：
 
-![](https://pic.downk.cc/item/5ff404313ffa7d37b3aa9b1a.png)
+<div align="center"> <img width='700px' src="https://gitee.com/oicio/BigData-Notes/raw/master/pictures/hive-external-table.png"/> </div>
 
 ### 2.4 分区表
 
-```bash
+```sql
   CREATE EXTERNAL TABLE emp_partition(
     empno INT,
     ename STRING,
@@ -148,7 +161,7 @@ CREATE [TEMPORARY] [EXTERNAL] TABLE [IF NOT EXISTS] [db_name.]table_name     --�
 
 ### 2.5 分桶表
 
-```bash
+```sql
   CREATE EXTERNAL TABLE emp_bucket(
     empno INT,
     ename STRING,
@@ -167,7 +180,7 @@ CREATE [TEMPORARY] [EXTERNAL] TABLE [IF NOT EXISTS] [db_name.]table_name     --�
 
 通过指定一个或者多个列经常出现的值（严重偏斜），Hive 会自动将涉及到这些值的数据拆分为单独的文件。在查询时，如果涉及到倾斜值，它就直接从独立文件中获取数据，而不是扫描所有文件，这使得性能得到提升。
 
-```bash
+```sql
   CREATE EXTERNAL TABLE emp_skewed(
     empno INT,
     ename STRING,
@@ -186,10 +199,10 @@ CREATE [TEMPORARY] [EXTERNAL] TABLE [IF NOT EXISTS] [db_name.]table_name     --�
 
 临时表仅对当前 session 可见，临时表的数据将存储在用户的暂存目录中，并在会话结束后删除。如果临时表与永久表表名相同，则对该表名的任何引用都将解析为临时表，而不是永久表。临时表还具有以下两个限制：
 
-- 不支持分区列；
-- 不支持创建索引。
++ 不支持分区列；
++ 不支持创建索引。
 
-```bash
+```sql
   CREATE TEMPORARY TABLE emp_temp(
     empno INT,
     ename STRING,
@@ -206,7 +219,7 @@ CREATE [TEMPORARY] [EXTERNAL] TABLE [IF NOT EXISTS] [db_name.]table_name     --�
 
 支持从查询语句的结果创建表：
 
-```bash
+```sql
 CREATE TABLE emp_copy AS SELECT * FROM emp WHERE deptno='20';
 ```
 
@@ -214,7 +227,7 @@ CREATE TABLE emp_copy AS SELECT * FROM emp WHERE deptno='20';
 
 语法：
 
-```bash
+```sql
 CREATE [TEMPORARY] [EXTERNAL] TABLE [IF NOT EXISTS] [db_name.]table_name  --创建表表名
    LIKE existing_table_or_view_name  --被复制表的表名
    [LOCATION hdfs_path]; --存储位置
@@ -222,22 +235,24 @@ CREATE [TEMPORARY] [EXTERNAL] TABLE [IF NOT EXISTS] [db_name.]table_name  --创�
 
 示例：
 
-```bash
+```sql
 CREATE TEMPORARY EXTERNAL TABLE  IF NOT EXISTS  emp_co  LIKE emp
 ```
+
+
 
 ### 2.10 加载数据到表
 
 加载数据到表中属于 DML 操作，这里为了方便大家测试，先简单介绍一下加载本地数据到表中：
 
-```bash
+```sql
 -- 加载数据到 emp 表中
 load data local inpath "/usr/file/emp.txt" into table emp;
 ```
 
-其中 emp.txt 的内容如下，你可以直接复制使用，也可以到本仓库的[resources](https://github.com/heibaiying/BigData-Notes/tree/master/resources) 目录下载：
+其中 emp.txt 的内容如下，你可以直接复制使用，也可以到本仓库的[resources](https://github.com/oicio/BigData-Notes/tree/master/resources) 目录下载：
 
-```bash
+```txt
 7369	SMITH	CLERK	7902	1980-12-17 00:00:00	800.00		20
 7499	ALLEN	SALESMAN	7698	1981-02-20 00:00:00	1600.00	300.00	30
 7521	WARD	SALESMAN	7698	1981-02-22 00:00:00	1250.00	500.00	30
@@ -256,7 +271,9 @@ load data local inpath "/usr/file/emp.txt" into table emp;
 
 加载后可查询表中数据：
 
-![](https://pic.downk.cc/item/5ff404313ffa7d37b3aa9b1c.png)
+<div align="center"> <img width='700px' src="https://gitee.com/oicio/BigData-Notes/raw/master/pictures/hive-select-emp.png"/> </div>
+
+
 
 ## 三、修改表
 
@@ -264,29 +281,30 @@ load data local inpath "/usr/file/emp.txt" into table emp;
 
 语法：
 
-```bash
+```sql
 ALTER TABLE table_name RENAME TO new_table_name;
 ```
 
 示例：
 
-```bash
+```sql
 ALTER TABLE emp_temp RENAME TO new_emp; --把 emp_temp 表重命名为 new_emp
 ```
+
 
 
 ### 3.2 修改列
 
 语法：
 
-```bash
+```sql
 ALTER TABLE table_name [PARTITION partition_spec] CHANGE [COLUMN] col_old_name col_new_name column_type
   [COMMENT col_comment] [FIRST|AFTER column_name] [CASCADE|RESTRICT];
 ```
 
 示例：
 
-```bash
+```sql
 -- 修改字段名和类型
 ALTER TABLE emp_temp CHANGE empno empno_new INT;
  
@@ -297,31 +315,34 @@ ALTER TABLE emp_temp CHANGE sal sal_new decimal(7,2)  AFTER ename;
 ALTER TABLE emp_temp CHANGE mgr mgr_new INT COMMENT 'this is column mgr';
 ```
 
+
+
 ### 3.3 新增列
 
 示例：
 
-```bash
+```sql
 ALTER TABLE emp_temp ADD COLUMNS (address STRING COMMENT 'home address');
 ```
 
-## 四、清空表/删除表
 
+
+## 四、清空表/删除表
 
 ### 4.1 清空表
 
 语法：
 
-```bash
+```sql
 -- 清空整个表或表指定分区中的数据
 TRUNCATE TABLE table_name [PARTITION (partition_column = partition_col_value,  ...)];
 ```
 
-- 目前只有内部表才能执行 TRUNCATE 操作，外部表执行时会抛出异常 `Cannot truncate non-managed table XXXX`。
++ 目前只有内部表才能执行 TRUNCATE 操作，外部表执行时会抛出异常 `Cannot truncate non-managed table XXXX`。
 
 示例：
 
-```bash
+```sql
 TRUNCATE TABLE emp_mgt_ptn PARTITION (deptno=20);
 ```
 
@@ -331,37 +352,39 @@ TRUNCATE TABLE emp_mgt_ptn PARTITION (deptno=20);
 
 语法：
 
-```bash
+```sql
 DROP TABLE [IF EXISTS] table_name [PURGE]; 
 ```
 
-- 内部表：不仅会删除表的元数据，同时会删除 HDFS 上的数据；
-- 外部表：只会删除表的元数据，不会删除 HDFS 上的数据；
-- 删除视图引用的表时，不会给出警告（但视图已经无效了，必须由用户删除或重新创建）。
++ 内部表：不仅会删除表的元数据，同时会删除 HDFS 上的数据；
++ 外部表：只会删除表的元数据，不会删除 HDFS 上的数据；
++ 删除视图引用的表时，不会给出警告（但视图已经无效了，必须由用户删除或重新创建）。
+
+
 
 ## 五、其他命令
-
 
 ### 5.1 Describe
 
 查看数据库：
 
-```bash
+```sql
 DESCRIBE|Desc DATABASE [EXTENDED] db_name;  --EXTENDED 是否显示额外属性
 ```
 
 查看表：
 
-```bash
+```sql
 DESCRIBE|Desc [EXTENDED|FORMATTED] table_name --FORMATTED 以友好的展现方式查看表详情
 ```
+
 
 
 ### 5.2 Show
 
 **1. 查看数据库列表**
 
-```bash
+```sql
 -- 语法
 SHOW (DATABASES|SCHEMAS) [LIKE 'identifier_with_wildcards'];
 
@@ -373,7 +396,7 @@ LIKE 子句允许使用正则表达式进行过滤，但是 SHOW 语句当中的
 
 **2. 查看表的列表**
 
-```bash
+```sql
 -- 语法
 SHOW TABLES [IN database_name] ['identifier_with_wildcards'];
 
@@ -383,18 +406,24 @@ SHOW TABLES IN default;
 
 **3. 查看视图列表**
 
-```bash
+```sql
 SHOW VIEWS [IN/FROM database_name] [LIKE 'pattern_with_wildcards'];   --仅支持 Hive 2.2.0 +
 ```
 
 **4. 查看表的分区列表**
 
-```bash
+```sql
 SHOW PARTITIONS table_name;
 ```
 
 **5. 查看表/视图的创建语句**
 
-```bash
+```sql
 SHOW CREATE TABLE ([db_name.]table_name|view_name);
 ```
+
+
+
+## 参考资料
+
+[LanguageManual DDL](https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DDL)

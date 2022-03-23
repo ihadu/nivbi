@@ -1,9 +1,13 @@
 ---
 title: Hbase架构及数据结构
 date: 2021-10-25 14:20:34
-tags: hbase
+keywords: 'hbase'
+tags:
+- hbase
+categories:
+- 大数据组件
+- hbase
 ---
-# Hbase系统架构及数据结构
 ## 一、基本概念
 
 一个典型的 Hbase Table 表如下：

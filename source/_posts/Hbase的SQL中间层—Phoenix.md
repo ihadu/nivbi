@@ -1,10 +1,13 @@
 ---
 title: Hbase的SQL中间层—Phoenix
 date: 2021-10-25 14:35:13
-tags: hbase
+keywords: 'hbase,phoenix'
+tags:
+- hbase
+categories:
+- 大数据组件
+- hbase
 ---
-# Hbase的SQL中间层——Phoenix
-
 ## 一、Phoenix简介
 
 `Phoenix` 是 HBase 的开源 SQL 中间层，它允许你使用标准 JDBC 的方式来操作 HBase 上的数据。在 `Phoenix` 之前，如果你要访问 HBase，只能调用它的 Java API，但相比于使用一行 SQL 就能实现数据查询，HBase 的 API 还是过于复杂。`Phoenix` 的理念是 `we put sql SQL back in NOSQL`，即你可以使用标准的 SQL 就能完成对 HBase 上数据的操作。同时这也意味着你可以通过集成 `Spring Data  JPA` 或 `Mybatis` 等常用的持久层框架来操作 HBase。

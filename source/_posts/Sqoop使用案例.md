@@ -1,7 +1,12 @@
 ---
 title: Sqoop使用案例
 date: 2021-10-25 13:47:30
-tags: sqoop
+keywords: 'sqoop'
+tags:
+- sqoop
+categories:
+- 大数据组件
+- sqoop
 ---
 ## Sqoop 原理
 将导入或导出命令翻译成 mapreduce 程序来实现。

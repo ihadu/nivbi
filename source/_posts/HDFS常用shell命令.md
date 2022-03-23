@@ -1,7 +1,12 @@
 ---
 title: HDFS常用shell命令
 date: 2021-10-15 15:04:06
-tags: hadoop
+keywords: 'hdfs'
+tags:
+- hadoop
+categories:
+- 大数据组件
+- hadoop
 ---
 **1. 显示当前目录结构**
 

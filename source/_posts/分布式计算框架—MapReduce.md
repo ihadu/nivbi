@@ -1,39 +1,52 @@
 ---
 title: 分布式计算框架—MapReduce
 date: 2021-10-15 14:59:00
-tags: hadoop
+keywords: 'mapReduce'
+tags:
+- hadoop
+categories:
+- 大数据组件
+- hadoop
 ---
 ## 一、MapReduce概述
 
 Hadoop MapReduce 是一个分布式计算框架，用于编写批处理应用程序。编写好的程序可以提交到 Hadoop 集群上用于并行处理大规模的数据集。
 
-MapReduce 作业通过将输入的数据集拆分为独立的块，这些块由 `map` 以并行的方式处理，框架对 `map` 的输出进行排序，然后输入到 `reduce` 中。MapReduce 框架专门用于 `` 键值对处理，它将作业的输入视为一组 `` 对，并生成一组 `` 对作为输出。输出和输出的 `key` 和 `value` 都必须实现[Writable](http://hadoop.apache.org/docs/stable/api/org/apache/hadoop/io/Writable.html) 接口。
+MapReduce 作业通过将输入的数据集拆分为独立的块，这些块由 `map` 以并行的方式处理，框架对 `map` 的输出进行排序，然后输入到 `reduce` 中。MapReduce 框架专门用于 `<key，value>` 键值对处理，它将作业的输入视为一组 `<key，value>` 对，并生成一组 `<key，value>` 对作为输出。输出和输出的 `key` 和 `value` 都必须实现[Writable](http://hadoop.apache.org/docs/stable/api/org/apache/hadoop/io/Writable.html) 接口。
 
 ```
 (input) <k1, v1> -> map -> <k2, v2> -> combine -> <k2, v2> -> reduce -> <k3, v3> (output)
 ```
 
+
+
 ## 二、MapReduce编程模型简述
 
 这里以词频统计为例进行说明，MapReduce 处理的流程如下：
 
-![](https://pic.downk.cc/item/5f7bec4a160a154a67deeaf8.png)
+<div align="center"> <img width="600px" src="https://gitee.com/oicio/BigData-Notes/raw/master/pictures/mapreduceProcess.png"/> </div>
 
 1. **input** : 读取文本文件；
+
 2. **splitting** : 将文件按照行进行拆分，此时得到的 `K1` 行数，`V1` 表示对应行的文本内容；
+
 3. **mapping** : 并行将每一行按照空格进行拆分，拆分得到的 `List(K2,V2)`，其中 `K2` 代表每一个单词，由于是做词频统计，所以 `V2` 的值为 1，代表出现 1 次；
 4. **shuffling**：由于 `Mapping` 操作可能是在不同的机器上并行处理的，所以需要通过 `shuffling` 将相同 `key` 值的数据分发到同一个节点上去合并，这样才能统计出最终的结果，此时得到 `K2` 为每一个单词，`List(V2)` 为可迭代集合，`V2` 就是 Mapping 中的 V2；
 5. **Reducing** : 这里的案例是统计单词出现的总次数，所以 `Reducing` 对 `List(V2)` 进行归约求和操作，最终输出。
 
 MapReduce 编程模型中 `splitting` 和 `shuffing` 操作都是由框架实现的，需要我们自己编程实现的只有 `mapping` 和 `reducing`，这也就是 MapReduce 这个称呼的来源。
 
+
+
 ## 三、combiner & partitioner
 
-![](https://pic.downk.cc/item/5f7bec95160a154a67defdb9.png)
+<div align="center"> <img width="600px" src="https://gitee.com/oicio/BigData-Notes/raw/master/pictures/Detailed-Hadoop-MapReduce-Data-Flow-14.png"/> </div>
 
 ### 3.1 InputFormat & RecordReaders
 
 `InputFormat` 将输出文件拆分为多个 `InputSplit`，并由 `RecordReaders` 将 `InputSplit` 转换为标准的<key，value>键值对，作为 map 的输出。这一步的意义在于只有先进行逻辑拆分并转为标准的键值对格式后，才能为多个 `map` 提供输入，以便进行并行处理。
+
+
 
 ### 3.2 Combiner
 
@@ -45,16 +58,21 @@ MapReduce 编程模型中 `splitting` 和 `shuffing` 操作都是由框架实现
 
 不使用 combiner 的情况：
 
-![](https://pic.downk.cc/item/5f7bec4a160a154a67deeaf5.png)
+<div align="center"> <img  width="600px"  src="https://gitee.com/oicio/BigData-Notes/raw/master/pictures/mapreduce-without-combiners.png"/> </div>
 
 使用 combiner 的情况：
 
-![](https://pic.downk.cc/item/5f7bec49160a154a67deeaf3.png)
+<div align="center"> <img width="600px"  src="https://gitee.com/oicio/BigData-Notes/raw/master/pictures/mapreduce-with-combiners.png"/> </div>
+
+
 
 可以看到使用 combiner 的时候，需要传输到 reducer 中的数据由 12keys，降低到 10keys。降低的幅度取决于你 keys 的重复率，下文词频统计案例会演示用 combiner 降低数百倍的传输量。
+
 ### 3.3 Partitioner
 
 `partitioner` 可以理解成分类器，将 `map` 的输出按照 key 值的不同分别分给对应的 `reducer`，支持自定义实现，下文案例会给出演示。
+
+
 
 ## 四、MapReduce词频统计案例
 
@@ -80,7 +98,8 @@ HBase	Hive
 
 为方便大家开发，我在项目源码中放置了一个工具类 `WordCountDataUtils`，用于模拟产生词频统计的样本，生成的文件支持输出到本地或者直接写到 HDFS 上。
 
-> 项目完整源码下载地址：[hadoop-word-count](https://github.com/ihadu/BigData-Notes/tree/master/code/Hadoop/hadoop-word-count)
+> 项目完整源码下载地址：[hadoop-word-count](https://github.com/oicio/BigData-Notes/tree/master/code/Hadoop/hadoop-word-count)
+
 
 
 ### 4.2 项目依赖
@@ -116,11 +135,11 @@ public class WordCountMapper extends Mapper<LongWritable, Text, Text, IntWritabl
 
 `WordCountMapper` 对应下图的 Mapping 操作：
 
-<img  src="https://gitee.com/ihadyou/BigData-Notes/raw/master/pictures/hadoop-code-mapping.png"/>
+<div align="center"> <img  src="https://gitee.com/oicio/BigData-Notes/raw/master/pictures/hadoop-code-mapping.png"/> </div>
 
 
 
-`WordCountMapper` 继承自 `Mapper` 类，这是一个泛型类，定义如下：
+`WordCountMapper` 继承自 `Mappe` 类，这是一个泛型类，定义如下：
 
 ```java
 WordCountMapper extends Mapper<LongWritable, Text, Text, IntWritable>
@@ -158,7 +177,7 @@ public class WordCountReducer extends Reducer<Text, IntWritable, Text, IntWritab
 
 如下图，`shuffling` 的输出是 reduce 的输入。这里的 key 是每个单词，values 是一个可迭代的数据类型，类似 `(1,1,1,...)`。
 
-<img  src="https://gitee.com/ihadyou/BigData-Notes/raw/master/pictures/hadoop-code-reducer.png"/>
+<div align="center"> <img  src="https://gitee.com/oicio/BigData-Notes/raw/master/pictures/hadoop-code-reducer.png"/> </div>
 
 ### 4.4 WordCountApp
 
@@ -247,7 +266,7 @@ public class WordCountApp {
 
 ```shell
 hadoop jar /usr/appjar/hadoop-word-count-1.0.jar \
-com.heibaiying.WordCountApp \
+com.oicio.WordCountApp \
 /wordcount/input.txt /wordcount/output/WordCountApp
 ```
 
@@ -261,7 +280,7 @@ hadoop fs -ls /wordcount/output/WordCountApp
 hadoop fs -cat /wordcount/output/WordCountApp/part-r-00000
 ```
 
-<img  src="https://gitee.com/ihadyou/BigData-Notes/raw/master/pictures/hadoop-wordcountapp.png"/>
+<div align="center"> <img  src="https://gitee.com/oicio/BigData-Notes/raw/master/pictures/hadoop-wordcountapp.png"/> </div>
 
 
 
@@ -282,13 +301,14 @@ job.setCombinerClass(WordCountReducer.class);
 
 没有加入 `combiner` 的打印日志：
 
-<img  src="https://gitee.com/ihadyou/BigData-Notes/raw/master/pictures/hadoop-no-combiner.png"/>
+<div align="center"> <img  src="https://gitee.com/oicio/BigData-Notes/raw/master/pictures/hadoop-no-combiner.png"/> </div>
 
 加入 `combiner` 后的打印日志如下：
 
-<img  src="https://gitee.com/ihadyou/BigData-Notes/raw/master/pictures/hadoop-combiner.png"/>
+<div align="center"> <img  src="https://gitee.com/oicio/BigData-Notes/raw/master/pictures/hadoop-combiner.png"/> </div>
 
 这里我们只有一个输入文件并且小于 128M，所以只有一个 Map 进行处理。可以看到经过 combiner 后，records 由 `3519` 降低为 `6`(样本中单词种类就只有 6 种)，在这个用例中 combiner 就能极大地降低需要传输的数据量。
+
 
 
 ## 六、词频统计案例进阶之Partitioner
@@ -333,11 +353,12 @@ job.setNumReduceTasks(WordCountDataUtils.WORD_LIST.size());
 ```
 
 
+
 ### 6.3  执行结果
 
 执行结果如下，分别生成 6 个文件，每个文件中为对应单词的统计结果：
 
-<img  src="https://gitee.com/ihadyou/BigData-Notes/raw/master/pictures/hadoop-wordcountcombinerpartition.png"/>
+<div align="center"> <img  src="https://gitee.com/oicio/BigData-Notes/raw/master/pictures/hadoop-wordcountcombinerpartition.png"/> </div>
 
 
 

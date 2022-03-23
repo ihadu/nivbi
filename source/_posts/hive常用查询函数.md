@@ -1,9 +1,14 @@
 ---
 title: Hive常用查询函数
 date: 2021-10-15 15:41:17
-tags: hive
+keywords: 'hive'
+tags:
+- hive
+categories:
+- 大数据组件
+- hive
+description:
 ---
-# 常用查询函数
 ## 1 空字段赋值NVL函数
 1.函数说明
 &emsp;&emsp;NVL：给值为NULL的数据赋值，它的格式是NVL( string1, replace_with)。它的功能是如果string1为NULL，则NVL函数返回replace_with的值，否则返回string1的值，如果两个参数都为NULL ，则返回NULL。
