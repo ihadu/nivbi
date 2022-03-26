@@ -3,6 +3,7 @@ title: 深入理解Kafka副本机制
 date: 2022-03-19 18:02:55
 tags:
 - kafka
+categories:
 - 大数据组件
 - kafka
 ---
